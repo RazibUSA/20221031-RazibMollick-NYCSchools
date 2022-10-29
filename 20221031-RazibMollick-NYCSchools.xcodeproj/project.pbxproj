@@ -101,14 +101,13 @@
 		2784BB6D290CEF5E00739414 /* 20221031-RazibMollick-NYCSchools */ = {
 			isa = PBXGroup;
 			children = (
-				2784BB6E290CEF5E00739414 /* AppDelegate.swift */,
-				2784BB70290CEF5E00739414 /* SceneDelegate.swift */,
-				2784BB72290CEF5E00739414 /* ViewController.swift */,
-				2784BB74290CEF5E00739414 /* Main.storyboard */,
-				2784BB7A290CEF6000739414 /* Assets.xcassets */,
-				2784BB7C290CEF6000739414 /* LaunchScreen.storyboard */,
+				2784BBA1290CF65D00739414 /* AppDelegates */,
+				2784BBA3290CF69C00739414 /* Coordinator */,
+				2784BBA4290CF6F700739414 /* DataSource */,
 				2784BB7F290CEF6000739414 /* Info.plist */,
-				2784BB77290CEF5E00739414 /* _0221031_RazibMollick_NYCSchools.xcdatamodeld */,
+				2784BBA2290CF67600739414 /* Resources */,
+				2784BBA5290CFF8D00739414 /* Services */,
+				2784BBA6290D009D00739414 /* Views */,
 			);
 			path = "20221031-RazibMollick-NYCSchools";
 			sourceTree = "<group>";
@@ -128,6 +127,55 @@
 				2784BB94290CEF6000739414 /* _0221031_RazibMollick_NYCSchoolsUITestsLaunchTests.swift */,
 			);
 			path = "20221031-RazibMollick-NYCSchoolsUITests";
+			sourceTree = "<group>";
+		};
+		2784BBA1290CF65D00739414 /* AppDelegates */ = {
+			isa = PBXGroup;
+			children = (
+				2784BB70290CEF5E00739414 /* SceneDelegate.swift */,
+				2784BB6E290CEF5E00739414 /* AppDelegate.swift */,
+			);
+			path = AppDelegates;
+			sourceTree = "<group>";
+		};
+		2784BBA2290CF67600739414 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2784BB77290CEF5E00739414 /* _0221031_RazibMollick_NYCSchools.xcdatamodeld */,
+				2784BB7C290CEF6000739414 /* LaunchScreen.storyboard */,
+				2784BB74290CEF5E00739414 /* Main.storyboard */,
+				2784BB7A290CEF6000739414 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		2784BBA3290CF69C00739414 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		2784BBA4290CF6F700739414 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		2784BBA5290CFF8D00739414 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		2784BBA6290D009D00739414 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2784BB72290CEF5E00739414 /* ViewController.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
