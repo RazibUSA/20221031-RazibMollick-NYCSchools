@@ -17,6 +17,10 @@
 		2784BB89290CEF6000739414 /* _0221031_RazibMollick_NYCSchoolsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BB88290CEF6000739414 /* _0221031_RazibMollick_NYCSchoolsTests.swift */; };
 		2784BB93290CEF6000739414 /* _0221031_RazibMollick_NYCSchoolsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BB92290CEF6000739414 /* _0221031_RazibMollick_NYCSchoolsUITests.swift */; };
 		2784BB95290CEF6000739414 /* _0221031_RazibMollick_NYCSchoolsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BB94290CEF6000739414 /* _0221031_RazibMollick_NYCSchoolsUITestsLaunchTests.swift */; };
+		2784BBA8290DF9D200739414 /* NetworkServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBA7290DF9D200739414 /* NetworkServiceError.swift */; };
+		2784BBAA290DFA2B00739414 /* NetworkDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBA9290DFA2B00739414 /* NetworkDispatcher.swift */; };
+		2784BBAC290F811800739414 /* SchoolDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBAB290F811800739414 /* SchoolDataFetcher.swift */; };
+		2784BBAF290F83E700739414 /* HighSchoolNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBAE290F83E700739414 /* HighSchoolNameModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,10 @@
 		2784BB8E290CEF6000739414 /* 20221031-RazibMollick-NYCSchoolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "20221031-RazibMollick-NYCSchoolsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2784BB92290CEF6000739414 /* _0221031_RazibMollick_NYCSchoolsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _0221031_RazibMollick_NYCSchoolsUITests.swift; sourceTree = "<group>"; };
 		2784BB94290CEF6000739414 /* _0221031_RazibMollick_NYCSchoolsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _0221031_RazibMollick_NYCSchoolsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2784BBA7290DF9D200739414 /* NetworkServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceError.swift; sourceTree = "<group>"; };
+		2784BBA9290DFA2B00739414 /* NetworkDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDispatcher.swift; sourceTree = "<group>"; };
+		2784BBAB290F811800739414 /* SchoolDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolDataFetcher.swift; sourceTree = "<group>"; };
+		2784BBAE290F83E700739414 /* HighSchoolNameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSchoolNameModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +113,7 @@
 				2784BBA3290CF69C00739414 /* Coordinator */,
 				2784BBA4290CF6F700739414 /* DataSource */,
 				2784BB7F290CEF6000739414 /* Info.plist */,
+				2784BBAD290F839800739414 /* Models */,
 				2784BBA2290CF67600739414 /* Resources */,
 				2784BBA5290CFF8D00739414 /* Services */,
 				2784BBA6290D009D00739414 /* Views */,
@@ -166,6 +175,9 @@
 		2784BBA5290CFF8D00739414 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				2784BBA7290DF9D200739414 /* NetworkServiceError.swift */,
+				2784BBA9290DFA2B00739414 /* NetworkDispatcher.swift */,
+				2784BBAB290F811800739414 /* SchoolDataFetcher.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -176,6 +188,14 @@
 				2784BB72290CEF5E00739414 /* ViewController.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		2784BBAD290F839800739414 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2784BBAE290F83E700739414 /* HighSchoolNameModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,9 +329,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2784BBA8290DF9D200739414 /* NetworkServiceError.swift in Sources */,
 				2784BB73290CEF5E00739414 /* ViewController.swift in Sources */,
+				2784BBAC290F811800739414 /* SchoolDataFetcher.swift in Sources */,
 				2784BB6F290CEF5E00739414 /* AppDelegate.swift in Sources */,
+				2784BBAA290DFA2B00739414 /* NetworkDispatcher.swift in Sources */,
 				2784BB71290CEF5E00739414 /* SceneDelegate.swift in Sources */,
+				2784BBAF290F83E700739414 /* HighSchoolNameModel.swift in Sources */,
 				2784BB79290CEF5E00739414 /* _0221031_RazibMollick_NYCSchools.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
