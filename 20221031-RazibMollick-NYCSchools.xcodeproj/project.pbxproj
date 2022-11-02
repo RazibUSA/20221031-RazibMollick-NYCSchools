@@ -23,6 +23,9 @@
 		2784BBB1290FB45E00739414 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBB0290FB45E00739414 /* BaseCoordinator.swift */; };
 		2784BBB3290FB7D300739414 /* HighSchoolListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBB2290FB7D300739414 /* HighSchoolListCoordinator.swift */; };
 		2784BBB6290FC3B400739414 /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBB5290FC3B400739414 /* AppNavigationController.swift */; };
+		2784BBB82910BF4100739414 /* HighSchoolNamesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBB72910BF4100739414 /* HighSchoolNamesDataSource.swift */; };
+		2784BBBA2910C6AB00739414 /* HighSchoolNameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBB92910C6AB00739414 /* HighSchoolNameCollectionViewCell.swift */; };
+		2784BBBC29114BA900739414 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBBB29114BA900739414 /* AppError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +66,9 @@
 		2784BBB0290FB45E00739414 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		2784BBB2290FB7D300739414 /* HighSchoolListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSchoolListCoordinator.swift; sourceTree = "<group>"; };
 		2784BBB5290FC3B400739414 /* AppNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
+		2784BBB72910BF4100739414 /* HighSchoolNamesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSchoolNamesDataSource.swift; sourceTree = "<group>"; };
+		2784BBB92910C6AB00739414 /* HighSchoolNameCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSchoolNameCollectionViewCell.swift; sourceTree = "<group>"; };
+		2784BBBB29114BA900739414 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +180,7 @@
 		2784BBA4290CF6F700739414 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
+				2784BBB72910BF4100739414 /* HighSchoolNamesDataSource.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -192,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				2784BB72290CEF5E00739414 /* HighSchoolListViewController.swift */,
+				2784BBB92910C6AB00739414 /* HighSchoolNameCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -208,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				2784BBB5290FC3B400739414 /* AppNavigationController.swift */,
+				2784BBBB29114BA900739414 /* AppError.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -343,9 +352,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				2784BBB3290FB7D300739414 /* HighSchoolListCoordinator.swift in Sources */,
+				2784BBB82910BF4100739414 /* HighSchoolNamesDataSource.swift in Sources */,
 				2784BBA8290DF9D200739414 /* NetworkServiceError.swift in Sources */,
 				2784BBB1290FB45E00739414 /* BaseCoordinator.swift in Sources */,
 				2784BB73290CEF5E00739414 /* HighSchoolListViewController.swift in Sources */,
+				2784BBBA2910C6AB00739414 /* HighSchoolNameCollectionViewCell.swift in Sources */,
+				2784BBBC29114BA900739414 /* AppError.swift in Sources */,
 				2784BBAC290F811800739414 /* SchoolDataFetcher.swift in Sources */,
 				2784BB6F290CEF5E00739414 /* AppDelegate.swift in Sources */,
 				2784BBAA290DFA2B00739414 /* NetworkDispatcher.swift in Sources */,

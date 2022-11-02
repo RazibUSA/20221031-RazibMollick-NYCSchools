@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct HighSchoolNameModel: Codable {
-   var dbn: String
-   var school_name: String
+struct HighSchoolNameModel: Codable, Hashable {
+    /// dbn can be used as the unique identifier
+    var dbn: String
+    var school_name: String
 }

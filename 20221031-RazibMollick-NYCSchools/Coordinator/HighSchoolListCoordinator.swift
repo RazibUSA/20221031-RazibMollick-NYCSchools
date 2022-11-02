@@ -23,7 +23,6 @@ final class HighSchoolListCoordinator: BaseCoordinator<Void> {
         let viewController = HighSchoolListViewController(coordinator: self)
         navigationController.pushViewController(viewController, animated: true)
         
-        
         return Empty(completeImmediately: false)
             .eraseToAnyPublisher()
     }
