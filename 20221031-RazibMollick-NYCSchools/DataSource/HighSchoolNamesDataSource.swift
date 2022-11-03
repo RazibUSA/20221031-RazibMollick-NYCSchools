@@ -10,6 +10,7 @@ import Combine
 
 class HighSchoolNamesDataSource {
     var dataSource: [HighSchoolNameModel] = []
+    var scoresModels: SATScoresModels?
     private let dataFetcher = SchoolDataFetcher()
     private var cancellables = Set<AnyCancellable>()
     
@@ -31,6 +32,27 @@ class HighSchoolNamesDataSource {
                 }
             }, receiveValue: { schoolNames in
                 self.dataSource = schoolNames
+            }).store(in: &cancellables)
+    }
+    
+    func requestScores(with dbn: String? = nil, completionHandler: @escaping (Error?) -> Void) {
+        dataFetcher.getSATScores(by: dbn)
+            .sink(receiveCompletion: { [weak self] value in
+                guard let self = self else { return }
+                
+                switch value {
+                case let .failure(error):
+                    debugPrint(error.localizedDescription)
+                    self.dataSource = []
+                    DispatchQueue.main.async {
+                        completionHandler(AppError.failToLoad(error))
+                    }
+                case .finished:
+                    completionHandler(nil)
+                    break
+                }
+            }, receiveValue: { scores in
+                self.scoresModels = scores
             }).store(in: &cancellables)
     }
 }

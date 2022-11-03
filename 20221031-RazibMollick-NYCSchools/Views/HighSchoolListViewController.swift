@@ -30,6 +30,7 @@ class HighSchoolListViewController: UIViewController {
     private lazy var dataSource: DataSource = makeDataSource()
     private var searchController = UISearchController(searchResultsController: nil)
     private lazy var viewModelDataSource: HighSchoolNamesDataSource = HighSchoolNamesDataSource()
+    let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
     
     init(coordinator: HighSchoolListCoordinator) {
         self.coordinator = coordinator
@@ -46,14 +47,17 @@ class HighSchoolListViewController: UIViewController {
         
         overrideUserInterfaceStyle = .light
         view.backgroundColor = .clear
+        collectionView.delegate = self
         configureSearchController()
         configureViews()
-        makeRequest()
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        makeSchoolNamesRequest()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         navigationItem.title = "NYC High Schools"
         
     }
@@ -112,9 +116,10 @@ private extension HighSchoolListViewController {
         return layout
     }
     
-    func makeRequest() {
+    func makeSchoolNamesRequest() {
         
         viewModelDataSource.requestSchoolNames { [weak self] error in
+            
             guard let self = self else { return }
             
             if let error = error as? AppError {
@@ -125,6 +130,28 @@ private extension HighSchoolListViewController {
             
             DispatchQueue.main.async {
                 self.applySnapShot(schoolList: self.viewModelDataSource.dataSource)
+                self.activityIndicator.stopAnimating()
+            }
+        }
+    }
+    
+    func makeSATScoresRequest(by dbn: String) {
+        
+        viewModelDataSource.requestScores(with: dbn) { [weak self] error in
+            guard let self = self else { return }
+            
+            if let error = error as? AppError {
+                //TBD
+                debugPrint(error.description)
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+                if let scoreModel = self.viewModelDataSource.scoresModels?.first {
+                    let scoresViewController = SATScoresViewController(with: scoreModel)
+                    self.present(scoresViewController, animated: true)
+                }
             }
         }
     }
@@ -141,5 +168,15 @@ extension HighSchoolListViewController: UISearchResultsUpdating {
       searchController.searchBar.placeholder = "Search School Name"
       navigationItem.searchController = searchController
       definesPresentationContext = true
+    }
+}
+
+extension HighSchoolListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let selectedSchool = dataSource.itemIdentifier(for: indexPath) else {
+            return
+        }
+        activityIndicator.startAnimating()
+        makeSATScoresRequest(by: selectedSchool.dbn)
     }
 }
