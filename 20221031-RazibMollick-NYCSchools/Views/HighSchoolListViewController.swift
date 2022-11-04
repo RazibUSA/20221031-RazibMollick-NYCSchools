@@ -13,11 +13,25 @@ enum Section {
 
 // MARK: - View Controller
 class HighSchoolListViewController: UIViewController {
+    enum Constants {
+        static let cellId = "nameCellId"
+        static let title = "NYC High Schools"
+        static let fatalError = "init(coder:) has not been implemented"
+        static let searchPlaceholderText = "Search School Name"
+        static let cellHeight = 50.0
+        static let insetsValue = 10.0
+    }
     
     // MARK: - Value Types
     typealias DataSource = UICollectionViewDiffableDataSource<Section, HighSchoolNameModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, HighSchoolNameModel>
     
+    let dataFatcher: SchoolDataFetcher
+    let coordinator: BaseCoordinator<Void>
+    private lazy var dataSource: DataSource = makeDataSource()
+    private var searchController = UISearchController(searchResultsController: nil)
+    private lazy var viewModelDataSource: HighSchoolNamesDataSource = HighSchoolNamesDataSource(dataFetcher: dataFatcher)
+    private let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
     private lazy var collectionView: UICollectionView = {
         let layout = setupCollectionViewLayout()
         let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
@@ -25,20 +39,15 @@ class HighSchoolListViewController: UIViewController {
         return collection
     }()
     
-    let cellId = "nameCellId"
-    let coordinator: HighSchoolListCoordinator
-    private lazy var dataSource: DataSource = makeDataSource()
-    private var searchController = UISearchController(searchResultsController: nil)
-    private lazy var viewModelDataSource: HighSchoolNamesDataSource = HighSchoolNamesDataSource()
-    let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
-    
-    init(coordinator: HighSchoolListCoordinator) {
+    init(coordinator: BaseCoordinator<Void>, dataFatcher: SchoolDataFetcher) {
         self.coordinator = coordinator
+        self.dataFatcher = dataFatcher
+        
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Constants.fatalError)
     }
     
     // MARK: - Lifecycle
@@ -58,15 +67,15 @@ class HighSchoolListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.title = "NYC High Schools"
-        
+        navigationItem.title = Constants.title
     }
 }
 
 private extension HighSchoolListViewController {
     func makeDataSource() -> DataSource {
-        return DataSource(collectionView: collectionView, cellProvider: { [self] (collectionView, indexPath, schoolNameModel) -> UICollectionViewCell? in
-            let cell: HighSchoolNameCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HighSchoolNameCollectionViewCell
+        return DataSource(collectionView: collectionView, cellProvider: { (collectionView, indexPath, schoolNameModel) -> UICollectionViewCell? in
+            let cell: HighSchoolNameCollectionViewCell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: Constants.cellId, for: indexPath) as! HighSchoolNameCollectionViewCell
             cell.schoolName = schoolNameModel.school_name
             
             return cell
@@ -93,7 +102,7 @@ private extension HighSchoolListViewController {
     }
     
     func configureViews() {
-        collectionView.register(HighSchoolNameCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(HighSchoolNameCollectionViewCell.self, forCellWithReuseIdentifier: Constants.cellId)
         self.setupCollectionView()
     }
     
@@ -104,11 +113,14 @@ private extension HighSchoolListViewController {
                                                   heightDimension: .fractionalHeight(1.0))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                   heightDimension: .absolute(60))
+                                                   heightDimension: .estimated(Constants.cellHeight))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                            subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+            section.contentInsets = NSDirectionalEdgeInsets(top: Constants.insetsValue,
+                                                            leading: Constants.insetsValue,
+                                                            bottom: Constants.insetsValue,
+                                                            trailing: Constants.insetsValue)
             section.interGroupSpacing = 5
             
             return section
@@ -117,14 +129,13 @@ private extension HighSchoolListViewController {
     }
     
     func makeSchoolNamesRequest() {
-        
         viewModelDataSource.requestSchoolNames { [weak self] error in
-            
             guard let self = self else { return }
             
             if let error = error as? AppError {
-                //TBD
+                self.activityIndicator.stopAnimating()
                 debugPrint(error.description)
+                self.showAlertMessage(title: "Error", body: error.localizedDescription)
                 return
             }
             
@@ -136,13 +147,14 @@ private extension HighSchoolListViewController {
     }
     
     func makeSATScoresRequest(by dbn: String) {
-        
         viewModelDataSource.requestScores(with: dbn) { [weak self] error in
             guard let self = self else { return }
             
             if let error = error as? AppError {
-                //TBD
+                //TBD - Need to show Error screen
+                self.activityIndicator.stopAnimating()
                 debugPrint(error.description)
+                self.showAlertMessage(title: "Error", body: error.localizedDescription)
                 return
             }
             
@@ -151,21 +163,37 @@ private extension HighSchoolListViewController {
                 if let scoreModel = self.viewModelDataSource.scoresModels?.first {
                     let scoresViewController = SATScoresViewController(with: scoreModel)
                     self.present(scoresViewController, animated: true)
+                } else {
+                    self.showAlertMessage(title: "No Record Found", body: "This school has no SAT scores Yet.")
                 }
             }
         }
     }
+    
+    func showAlertMessage(title: String, body: String) {
+        let alert = UIAlertController(title: title, message: body, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
+//MARK: Search
 extension HighSchoolListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        // TO-DO: -
+        if let query = searchController.searchBar.text, !query.isEmpty {
+            let schools = viewModelDataSource.dataSource.filter { model in
+                model.school_name.lowercased().contains(query.lowercased())
+            }
+            applySnapShot(schoolList: schools)
+        } else {
+            applySnapShot(schoolList: viewModelDataSource.dataSource)
+        }
     }
     
     func configureSearchController() {
       searchController.searchResultsUpdater = self
       searchController.obscuresBackgroundDuringPresentation = false
-      searchController.searchBar.placeholder = "Search School Name"
+        searchController.searchBar.placeholder = Constants.searchPlaceholderText
       navigationItem.searchController = searchController
       definesPresentationContext = true
     }
@@ -176,7 +204,32 @@ extension HighSchoolListViewController: UICollectionViewDelegate {
         guard let selectedSchool = dataSource.itemIdentifier(for: indexPath) else {
             return
         }
+        
         activityIndicator.startAnimating()
         makeSATScoresRequest(by: selectedSchool.dbn)
     }
 }
+
+//MARK: - Unit Test Sample
+
+#if DEBUG
+extension HighSchoolListViewController {
+    struct TestHooks {
+        let sut:  HighSchoolListViewController
+        var collectionView: UICollectionView { sut.collectionView }
+        var dataSource: HighSchoolNamesDataSource { sut.viewModelDataSource }
+        
+        func makeSchoolNamesRequest() {
+            sut.makeSchoolNamesRequest()
+        }
+        
+        func setupCollectionViewLayout() -> UICollectionViewCompositionalLayout {
+            sut.setupCollectionViewLayout()
+        }
+    }
+    
+    var testHooks: TestHooks {
+        TestHooks(sut: self)
+    }
+}
+#endif

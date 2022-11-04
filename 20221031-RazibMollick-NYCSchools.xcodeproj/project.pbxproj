@@ -28,6 +28,11 @@
 		2784BBBC29114BA900739414 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBBB29114BA900739414 /* AppError.swift */; };
 		2784BBBE291397E700739414 /* SATScoresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBBD291397E700739414 /* SATScoresViewController.swift */; };
 		2784BBC02913BB3700739414 /* SATScoresModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBBF2913BB3700739414 /* SATScoresModels.swift */; };
+		2784BBC22914645C00739414 /* NetworkDispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBC12914645C00739414 /* NetworkDispatcherTests.swift */; };
+		2784BBC42914648E00739414 /* MockDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBC32914648E00739414 /* MockDataHelper.swift */; };
+		2784BBC62915065200739414 /* SchoolDataFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBC52915065200739414 /* SchoolDataFetcherTests.swift */; };
+		2784BBC72915097F00739414 /* MockDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBC32914648E00739414 /* MockDataHelper.swift */; };
+		2784BBC92915287900739414 /* HighSchoolListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2784BBC82915287900739414 /* HighSchoolListViewControllerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +78,10 @@
 		2784BBBB29114BA900739414 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		2784BBBD291397E700739414 /* SATScoresViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SATScoresViewController.swift; sourceTree = "<group>"; };
 		2784BBBF2913BB3700739414 /* SATScoresModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SATScoresModels.swift; sourceTree = "<group>"; };
+		2784BBC12914645C00739414 /* NetworkDispatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDispatcherTests.swift; sourceTree = "<group>"; };
+		2784BBC32914648E00739414 /* MockDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataHelper.swift; sourceTree = "<group>"; };
+		2784BBC52915065200739414 /* SchoolDataFetcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolDataFetcherTests.swift; sourceTree = "<group>"; };
+		2784BBC82915287900739414 /* HighSchoolListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighSchoolListViewControllerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +149,10 @@
 			isa = PBXGroup;
 			children = (
 				2784BB88290CEF6000739414 /* _0221031_RazibMollick_NYCSchoolsTests.swift */,
+				2784BBC12914645C00739414 /* NetworkDispatcherTests.swift */,
+				2784BBC32914648E00739414 /* MockDataHelper.swift */,
+				2784BBC52915065200739414 /* SchoolDataFetcherTests.swift */,
+				2784BBC82915287900739414 /* HighSchoolListViewControllerTests.swift */,
 			);
 			path = "20221031-RazibMollick-NYCSchoolsTests";
 			sourceTree = "<group>";
@@ -372,6 +385,7 @@
 				2784BBB6290FC3B400739414 /* AppNavigationController.swift in Sources */,
 				2784BB71290CEF5E00739414 /* SceneDelegate.swift in Sources */,
 				2784BBAF290F83E700739414 /* HighSchoolNameModel.swift in Sources */,
+				2784BBC72915097F00739414 /* MockDataHelper.swift in Sources */,
 				2784BB79290CEF5E00739414 /* _0221031_RazibMollick_NYCSchools.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -380,7 +394,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2784BBC92915287900739414 /* HighSchoolListViewControllerTests.swift in Sources */,
+				2784BBC42914648E00739414 /* MockDataHelper.swift in Sources */,
+				2784BBC62915065200739414 /* SchoolDataFetcherTests.swift in Sources */,
 				2784BB89290CEF6000739414 /* _0221031_RazibMollick_NYCSchoolsTests.swift in Sources */,
+				2784BBC22914645C00739414 /* NetworkDispatcherTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

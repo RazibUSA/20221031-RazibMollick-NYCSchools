@@ -8,7 +8,13 @@
 import Combine
 import Foundation
 
-struct NetworkDispatcher {
+//MARK: Protocol
+protocol Dispatchable {
+    func dispatch<T: Codable>(with components: URLComponents) -> AnyPublisher<T, NetworkServiceError>
+}
+
+//MARK: - REST service request
+struct NetworkDispatcher: Dispatchable {
     
     private let urlSession: URLSession
     
@@ -16,9 +22,8 @@ struct NetworkDispatcher {
         self.urlSession = urlSession
     }
     
-    /// Dispatches an URLRequest and returns a publisher
+    /// A generic Dispatches an URLRequest and returns a publisher
     func dispatch<T: Codable>(with components: URLComponents) -> AnyPublisher<T, NetworkServiceError> {
-        
         guard let request = components.url else {
             let error = NetworkServiceError.badRequest
               return Fail(error: error).eraseToAnyPublisher()
@@ -26,28 +31,26 @@ struct NetworkDispatcher {
         
         return urlSession
             .dataTaskPublisher(for: request)
-            // Map on Request response
             .tryMap({ data, response in
-                // If the response is invalid, throw an error
                 if let response = response as? HTTPURLResponse,
                    !(200...299).contains(response.statusCode) {
                     throw httpError(response.statusCode)
                 }
-                // Return Response data
+                
                 return data
             })
-            // Decode data using our ReturnType
             .decode(type: T.self, decoder: JSONDecoder())
-            // Handle any decoding errors
             .mapError { error in
                 handleError(error)
             }
-            // And finally, expose our publisher
             .eraseToAnyPublisher()
     }
-    
+}
+
+//MARK: - Private helper function
+private extension NetworkDispatcher {
     /// Parses a HTTP StatusCode and returns a proper error
-    private func httpError(_ statusCode: Int) -> NetworkServiceError {
+    func httpError(_ statusCode: Int) -> NetworkServiceError {
         switch statusCode {
         case 400: return .badRequest
         case 401: return .unauthorized
@@ -60,10 +63,7 @@ struct NetworkDispatcher {
         }
     }
     
-    /// Parses URLSession Publisher errors and return proper ones
-    /// - Parameter error: URLSession publisher error
-    /// - Returns: Readable NetworkRequestError
-    private func handleError(_ error: Error) -> NetworkServiceError {
+    func handleError(_ error: Error) -> NetworkServiceError {
         switch error {
         case is Swift.DecodingError:
             return .decodingError(error.localizedDescription)
@@ -76,3 +76,24 @@ struct NetworkDispatcher {
         }
     }
 }
+
+#if DEBUG
+//MARK: Tests
+extension NetworkDispatcher {
+    struct TestHooks {
+        let target: NetworkDispatcher
+        
+        func httpError(_ statusCode: Int) -> NetworkServiceError {
+            target.httpError(statusCode)
+        }
+        
+        func handleError(_ error: Error) -> NetworkServiceError {
+            target.handleError(error)
+        }
+    }
+    
+    var testHooks: TestHooks {
+        TestHooks(target: self)
+    }
+}
+#endif

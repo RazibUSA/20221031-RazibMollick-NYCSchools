@@ -15,9 +15,9 @@ protocol SchoolDataFetchable{
 
 struct SchoolDataFetcher {
     
-    private var networkDispatcher: NetworkDispatcher
+    private var networkDispatcher: Dispatchable
     
-    init(networkDispatcher: NetworkDispatcher = NetworkDispatcher()) {
+    init(networkDispatcher: Dispatchable = NetworkDispatcher()) {
         self.networkDispatcher = networkDispatcher
     }
 }

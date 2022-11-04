@@ -10,6 +10,7 @@ import UIKit
 
 final class HighSchoolListCoordinator: BaseCoordinator<Void> {
     unowned let window: UIWindow
+    let productionNetworkDispatcher: SchoolDataFetcher = SchoolDataFetcher(networkDispatcher: NetworkDispatcher())
     
     init(window: UIWindow) {
         self.window = window
@@ -20,7 +21,8 @@ final class HighSchoolListCoordinator: BaseCoordinator<Void> {
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         
-        let viewController = HighSchoolListViewController(coordinator: self)
+        let viewController = HighSchoolListViewController(coordinator: self,
+                                                          dataFatcher: productionNetworkDispatcher)
         navigationController.pushViewController(viewController, animated: true)
         
         return Empty(completeImmediately: false)

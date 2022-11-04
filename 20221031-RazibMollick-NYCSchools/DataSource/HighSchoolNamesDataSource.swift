@@ -8,11 +8,18 @@
 import Foundation
 import Combine
 
+// MARK: View Model in MVVM-C
 class HighSchoolNamesDataSource {
     var dataSource: [HighSchoolNameModel] = []
     var scoresModels: SATScoresModels?
-    private let dataFetcher = SchoolDataFetcher()
+    private let dataFetcher: SchoolDataFetcher
     private var cancellables = Set<AnyCancellable>()
+    
+    init(scoresModels: SATScoresModels? = nil, dataFetcher: SchoolDataFetcher, cancellables: Set<AnyCancellable> = Set<AnyCancellable>()) {
+        self.scoresModels = scoresModels
+        self.dataFetcher = dataFetcher
+        self.cancellables = cancellables
+    }
     
     func requestSchoolNames(completionHandler: @escaping (Error?) -> Void) {
         dataFetcher.getHighSchoolNames()
